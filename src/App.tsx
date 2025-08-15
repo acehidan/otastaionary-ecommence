@@ -1,37 +1,42 @@
-import React, { useState } from 'react';
-import Header from './components/Header';
-import HeroSection from './components/HeroSection';
-import ProductGrid from './components/ProductGrid';
-import ProductDetail from './components/ProductDetail';
-import CartSidebar, { CartItem } from './components/CartSidebar';
-import Footer from './components/Footer';
-import { Product } from './components/ProductCard';
+import React, { useState } from "react";
+import Header from "./components/Header";
+import HeroSection from "./components/HeroSection";
+import ProductGrid from "./components/ProductGrid";
+import ProductDetail from "./components/ProductDetail";
+import CartSidebar, { CartItem } from "./components/CartSidebar";
+import Footer from "./components/Footer";
+import { Product } from "./components/ProductCard";
+import CheckoutPage from "./components/CheckoutPage";
 
 function App() {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
 
   const handleAddToCart = (product: Product, quantity: number = 1) => {
-    setCartItems(prev => {
-      const existingItem = prev.find(item => item.id === product.id);
+    setCartItems((prev) => {
+      const existingItem = prev.find((item) => item.id === product.id);
       if (existingItem) {
-        return prev.map(item =>
+        return prev.map((item) =>
           item.id === product.id
             ? { ...item, quantity: item.quantity + quantity }
             : item
         );
       } else {
-        return [...prev, {
-          id: product.id,
-          name: product.name,
-          price: product.price,
-          image: product.image,
-          quantity
-        }];
+        return [
+          ...prev,
+          {
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            image: product.image,
+            quantity,
+          },
+        ];
       }
     });
-    
+
     // Close product detail if open
     if (selectedProduct) {
       setSelectedProduct(null);
@@ -43,21 +48,32 @@ function App() {
   };
 
   const handleUpdateCartQuantity = (id: number, quantity: number) => {
-    setCartItems(prev =>
-      prev.map(item =>
-        item.id === id ? { ...item, quantity } : item
-      )
+    setCartItems((prev) =>
+      prev.map((item) => (item.id === id ? { ...item, quantity } : item))
     );
   };
 
   const handleRemoveFromCart = (id: number) => {
-    setCartItems(prev => prev.filter(item => item.id !== id));
+    setCartItems((prev) => prev.filter((item) => item.id !== id));
   };
 
-  const totalCartItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+  const totalCartItems = cartItems.reduce(
+    (sum, item) => sum + item.quantity,
+    0
+  );
 
   const handleCartClick = () => {
     setIsCartOpen(true);
+  };
+
+  const handleCheckout = () => {
+    setIsCartOpen(false);
+    setIsCheckoutOpen(true);
+  };
+
+  const handleOrderComplete = () => {
+    setCartItems([]);
+    setIsCheckoutOpen(false);
   };
 
   return (
@@ -65,10 +81,13 @@ function App() {
       <Header cartItems={totalCartItems} onCartClick={handleCartClick} />
       <main>
         <HeroSection />
-        <ProductGrid onAddToCart={handleAddToCart} onViewDetails={handleViewDetails} />
+        <ProductGrid
+          onAddToCart={handleAddToCart}
+          onViewDetails={handleViewDetails}
+        />
       </main>
       <Footer />
-      
+
       {/* Product Detail Modal */}
       {selectedProduct && (
         <ProductDetail
@@ -77,7 +96,7 @@ function App() {
           onAddToCart={handleAddToCart}
         />
       )}
-      
+
       {/* Cart Sidebar */}
       <CartSidebar
         isOpen={isCartOpen}
@@ -85,7 +104,17 @@ function App() {
         cartItems={cartItems}
         onUpdateQuantity={handleUpdateCartQuantity}
         onRemoveItem={handleRemoveFromCart}
+        onCheckout={handleCheckout}
       />
+
+      {/* Checkout Page */}
+      {isCheckoutOpen && (
+        <CheckoutPage
+          cartItems={cartItems}
+          onClose={() => setIsCheckoutOpen(false)}
+          onOrderComplete={handleOrderComplete}
+        />
+      )}
     </div>
   );
 }

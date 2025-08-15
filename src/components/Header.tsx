@@ -92,7 +92,7 @@ const Header: React.FC<HeaderProps> = ({ cartItems, onCartClick }) => {
         </div>
 
         {/* Navigation */}
-        <nav className="hidden md:block mt-4">
+        {/* <nav className="hidden md:block mt-4">
           <ul className="flex space-x-8 text-sm font-medium text-gray-700">
             <li>
               <a href="#" className="hover:text-amber-600 transition-colors">
@@ -130,7 +130,7 @@ const Header: React.FC<HeaderProps> = ({ cartItems, onCartClick }) => {
               </a>
             </li>
           </ul>
-        </nav>
+        </nav> */}
       </div>
 
       {/* Mobile menu */}

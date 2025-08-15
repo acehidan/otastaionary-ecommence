@@ -137,18 +137,20 @@ const Footer: React.FC = () => {
             <div className="space-y-3">
               <div className="flex items-center space-x-3">
                 <Mail className="h-5 w-5 text-amber-500" />
-                <span className="text-gray-300">support@goldentiger.store</span>
+                <span className="text-gray-300">
+                  info@otastechsolutions.com
+                </span>
               </div>
               <div className="flex items-center space-x-3">
                 <Phone className="h-5 w-5 text-amber-500" />
-                <span className="text-gray-300">+1 (555) 123-4567</span>
+                <span className="text-gray-300">+95 995 120 7795</span>
               </div>
               <div className="flex items-center space-x-3">
                 <MapPin className="h-5 w-5 text-amber-500" />
                 <span className="text-gray-300">
-                  123 Business Ave, Suite 100
+                  Hledan, Yangon
                   <br />
-                  New York, NY 10001
+                  Myanmar
                 </span>
               </div>
             </div>
@@ -187,6 +189,17 @@ const Footer: React.FC = () => {
             <a href="#" className="hover:text-amber-500 transition-colors">
               {" "}
               Terms of Service
+            </a>
+          </p>
+
+          <p className="text-gray-400 text-sm">
+            Powered by{" "}
+            <a
+              href="https://otastechsolutions.com/"
+              target="_blank"
+              className="text-blue-600 hover:text-blue-800 transition-colors"
+            >
+              OTAS Tech Solutions
             </a>
           </p>
         </div>

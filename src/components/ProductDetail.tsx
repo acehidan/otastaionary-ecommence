@@ -1,6 +1,17 @@
-import React, { useState } from 'react';
-import { ArrowLeft, Star, Heart, ShoppingCart, Minus, Plus, Truck, Shield, RotateCcw, Award } from 'lucide-react';
-import { Product } from './ProductCard';
+import React, { useState } from "react";
+import {
+  ArrowLeft,
+  Star,
+  Heart,
+  ShoppingCart,
+  Minus,
+  Plus,
+  Truck,
+  Shield,
+  RotateCcw,
+  Award,
+} from "lucide-react";
+import { Product } from "./ProductCard";
 
 interface ProductDetailProps {
   product: Product;
@@ -8,24 +19,30 @@ interface ProductDetailProps {
   onAddToCart: (product: Product, quantity: number) => void;
 }
 
-const ProductDetail: React.FC<ProductDetailProps> = ({ product, onClose, onAddToCart }) => {
+const ProductDetail: React.FC<ProductDetailProps> = ({
+  product,
+  onClose,
+  onAddToCart,
+}) => {
   const [quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(0);
 
   // Mock additional images for the product
   const productImages = [
     product.image,
-    'https://images.pexels.com/photos/1925536/pexels-photo-1925536.jpeg?auto=compress&cs=tinysrgb&w=800',
-    'https://images.pexels.com/photos/159751/book-address-book-learning-learn-159751.jpeg?auto=compress&cs=tinysrgb&w=800',
-    'https://images.pexels.com/photos/261857/pexels-photo-261857.jpeg?auto=compress&cs=tinysrgb&w=800'
+    "https://images.pexels.com/photos/1925536/pexels-photo-1925536.jpeg?auto=compress&cs=tinysrgb&w=800",
+    "https://images.pexels.com/photos/159751/book-address-book-learning-learn-159751.jpeg?auto=compress&cs=tinysrgb&w=800",
+    "https://images.pexels.com/photos/261857/pexels-photo-261857.jpeg?auto=compress&cs=tinysrgb&w=800",
   ];
 
-  const discount = product.originalPrice 
-    ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
+  const discount = product.originalPrice
+    ? Math.round(
+        ((product.originalPrice - product.price) / product.originalPrice) * 100
+      )
     : 0;
 
   const handleQuantityChange = (change: number) => {
-    setQuantity(prev => Math.max(1, prev + change));
+    setQuantity((prev) => Math.max(1, prev + change));
   };
 
   const handleAddToCart = () => {
@@ -37,7 +54,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, onClose, onAddTo
       <div className="bg-white rounded-2xl max-w-6xl w-full max-h-[90vh] overflow-y-auto">
         {/* Header */}
         <div className="sticky top-0 bg-white border-b border-gray-200 p-4 flex items-center justify-between">
-          <button 
+          <button
             onClick={onClose}
             className="flex items-center space-x-2 text-gray-600 hover:text-amber-600 transition-colors"
           >
@@ -54,13 +71,13 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, onClose, onAddTo
             {/* Product Images */}
             <div className="space-y-4">
               <div className="aspect-square rounded-xl overflow-hidden bg-gray-100">
-                <img 
-                  src={productImages[selectedImage]} 
+                <img
+                  src={productImages[selectedImage]}
                   alt={product.name}
                   className="w-full h-full object-cover"
                 />
               </div>
-              
+
               {/* Thumbnail Images */}
               <div className="grid grid-cols-4 gap-3">
                 {productImages.map((image, index) => (
@@ -68,11 +85,13 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, onClose, onAddTo
                     key={index}
                     onClick={() => setSelectedImage(index)}
                     className={`aspect-square rounded-lg overflow-hidden border-2 transition-colors ${
-                      selectedImage === index ? 'border-amber-500' : 'border-gray-200 hover:border-amber-300'
+                      selectedImage === index
+                        ? "border-amber-500"
+                        : "border-gray-200 hover:border-amber-300"
                     }`}
                   >
-                    <img 
-                      src={image} 
+                    <img
+                      src={image}
                       alt={`${product.name} view ${index + 1}`}
                       className="w-full h-full object-cover"
                     />
@@ -111,12 +130,12 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, onClose, onAddTo
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-1">
                   {[...Array(5)].map((_, i) => (
-                    <Star 
+                    <Star
                       key={i}
                       className={`h-5 w-5 ${
-                        i < Math.floor(product.rating) 
-                          ? 'text-yellow-400 fill-current' 
-                          : 'text-gray-300'
+                        i < Math.floor(product.rating)
+                          ? "text-yellow-400 fill-current"
+                          : "text-gray-300"
                       }`}
                     />
                   ))}
@@ -149,9 +168,10 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, onClose, onAddTo
               {/* Description */}
               <div className="prose prose-gray">
                 <p className="text-gray-600 leading-relaxed">
-                  Experience premium quality with this exceptional {product.name.toLowerCase()}. 
-                  Crafted with attention to detail and designed for professionals who demand excellence. 
-                  Perfect for daily use in office environments or creative projects.
+                  Experience premium quality with this exceptional{" "}
+                  {product.name.toLowerCase()}. Crafted with attention to detail
+                  and designed for professionals who demand excellence. Perfect
+                  for daily use in office environments or creative projects.
                 </p>
                 <ul className="text-gray-600 space-y-1 mt-4">
                   <li>• Premium materials and construction</li>
@@ -196,7 +216,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, onClose, onAddTo
 
               {/* Action Buttons */}
               <div className="space-y-3">
-                <button 
+                <button
                   onClick={handleAddToCart}
                   className="w-full bg-amber-600 text-white py-4 px-6 rounded-xl font-semibold text-lg hover:bg-amber-700 transition-colors flex items-center justify-center space-x-2"
                 >
@@ -213,29 +233,41 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, onClose, onAddTo
                 <div className="flex items-center space-x-3">
                   <Truck className="h-5 w-5 text-amber-600" />
                   <div>
-                    <div className="font-semibold text-sm text-gray-800">Free Shipping</div>
-                    <div className="text-xs text-gray-600">On orders over $50</div>
+                    <div className="font-semibold text-sm text-gray-800">
+                      Free Shipping
+                    </div>
+                    <div className="text-xs text-gray-600">
+                      On orders over $50
+                    </div>
                   </div>
                 </div>
                 <div className="flex items-center space-x-3">
                   <Shield className="h-5 w-5 text-amber-600" />
                   <div>
-                    <div className="font-semibold text-sm text-gray-800">Secure Payment</div>
+                    <div className="font-semibold text-sm text-gray-800">
+                      Secure Payment
+                    </div>
                     <div className="text-xs text-gray-600">SSL encrypted</div>
                   </div>
                 </div>
                 <div className="flex items-center space-x-3">
                   <RotateCcw className="h-5 w-5 text-amber-600" />
                   <div>
-                    <div className="font-semibold text-sm text-gray-800">Easy Returns</div>
+                    <div className="font-semibold text-sm text-gray-800">
+                      Easy Returns
+                    </div>
                     <div className="text-xs text-gray-600">30-day policy</div>
                   </div>
                 </div>
                 <div className="flex items-center space-x-3">
                   <Award className="h-5 w-5 text-amber-600" />
                   <div>
-                    <div className="font-semibold text-sm text-gray-800">Quality Guarantee</div>
-                    <div className="text-xs text-gray-600">Premium materials</div>
+                    <div className="font-semibold text-sm text-gray-800">
+                      Quality Guarantee
+                    </div>
+                    <div className="text-xs text-gray-600">
+                      Premium materials
+                    </div>
                   </div>
                 </div>
               </div>
